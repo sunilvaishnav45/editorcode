@@ -1,0 +1,178 @@
+<div class="_wdc-100 pr-3 pl-3">
+  <div class="row">
+    <!--Left panel of all -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 border-right _htc-100 _leftpanel">
+      <div class="row">
+        <div class="col-3 border-bottom pt-1 pb-1">
+            <small> DFIN </small>
+        </div>
+        <div class="col-9 text-right border-bottom pt-1 pb-1">
+          <small> 
+            <i class="fa fa-plus pr-3 _cp" tooltip="Add new" position="top" (click)="openNewCollectionModal(saveNewCollection)"></i>
+            <i class="fa fa-expand _cp pr-3" tooltip="Under implementation" position="top"></i>
+            <i class="fa fa-angle-double-left _cp" tooltip="Under implementation" position="top"></i>
+          </small>
+        </div>
+        <!--Saved collection list start here-->
+
+        <div class="col-12">
+           <div *ngIf="(savedCollectionInDB | json) != '{}' ;else noCollectionFound" class="row">
+              <!--Collection name - Parent-->
+              <div *ngFor="let collection of savedCollectionInDB | keyvalue" class="col-12">
+                  <div class="row align-items-center _collection pt-1 pb-1">
+                      <div class="col-8">
+                        <div class="_fs-12">
+                            {{collection.key}}
+                        </div>
+                      </div>
+                      <div class="col-4 text-right">
+                          <i class="fa fa-trash pr-3 _cp _fs-12" tooltip="Delete" position="top" (click)="deleteCollection(collection)"></i>
+                          <i class="fa fa-plus _cp _fs-12" tooltip="Add new" position="top" (click)="openNewChildModal(collection,saveNewChild)"></i>
+                      </div>
+                  </div>
+
+                  <!--Collection childs start here-->
+                  <div *ngFor="let child of collection.value | keyvalue" class="_fs-12">
+                      <div class="row _collection pt-1 pb-1">
+                          <div class="col-8">
+                            <div class="_fs-12 pl-2">
+                                {{child.key}}
+                            </div>
+                          </div>
+                          <div class="col-4 text-right">
+                              <i class="fa fa-plus _cp _fs-12" tooltip="Add new" position="top" (click)="openNewGrandChildModal(collection,child,saveNewGrandChild)"></i>
+                          </div>
+                      </div>
+
+                      <!--Collection grand childs start here-->
+                      <div *ngFor="let grandchild of child.value | keyvalue" class="_fs-12">
+                        <div class="row _collection pt-1 pb-1">
+                          <div class="col-12">
+                            <div class="_fs-12">
+                                <div *ngIf="grandchild.value.addEditor == true">
+                                    <a routerLink="/all/content/we" class="d-inline-block w-100 position-relative _content pl-3" routerLinkActive="active-link">{{grandchild.key}}
+                                      <div class="activecontent"></div>
+                                    </a>
+                                </div>
+                                <div *ngIf="grandchild.value.addEditor == false">
+                                    <a routerLink="/all/content/woe" class="d-inline-block w-100 position-relative _content pl-3" routerLinkActive="active-link">{{grandchild.key}}
+                                      <div class="activecontent"></div>
+                                    </a>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--Collection grand childs end here-->
+                  </div>
+                  <!--Collection childs end here-->
+              </div>
+           </div>
+        </div>
+        <!--Saved collection list end here-->
+      </div>
+    </div>
+    <!--Left panel of all end -->
+
+    <!--Right panel of all -->
+    <div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-10 _htc-100">
+        <router-outlet></router-outlet>
+    </div>
+    <!--Right panel of all end-->
+  </div>
+</div>
+
+<!--Save new collection modal template-->
+<ng-template #saveNewCollection>
+  <form [formGroup]="saveNewCollectionForm">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Add Parent</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="saveNewCollectionModal.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="exampleInputCollection" class="m-0 p-0 _fs-12">Enter Collection Name</label>
+        <small id="collectionSizeHelp" class="form-text text-muted pl-1 mb-1 mt-0">Min size 5 , Max size 15</small>
+        <input formControlName="name" autocomplete="off" type="text" max="15" class="form-control" id="exampleInputCollection" aria-describedby="collectionSizeHelp" placeholder="Enter name">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="text-right">
+        <button class="btn btn-primary" (click)="saveNewCollectionInLocalStorage()" [disabled]=!saveNewCollectionForm.valid>Add</button>
+      </div>
+    </div>
+  </form>
+  </ng-template>
+<!--Save new collection modal template end-->
+
+<!--Save new child modal template-->
+<ng-template #saveNewChild>
+    <form [formGroup]="saveNewChildForm">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Child</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="saveNewChildModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="exampleInputChild" class="m-0 p-0 _fs-12">Enter Child Name</label>
+          <small class="form-text text-muted pl-1 mb-1 mt-0">Min size 5 , Max size 15</small>
+          <input formControlName="name" autocomplete="off" type="text" max="15" class="form-control" id="exampleInputChild" placeholder="Enter name">
+          <input hidden formControlName="collection">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="text-right">
+          <button class="btn btn-primary" (click)="saveNewChildInLocalStorage()" [disabled]=!saveNewChildForm.valid>Add</button>
+        </div>
+      </div>
+    </form>
+    </ng-template>
+  <!--Save new child modal template end-->
+
+
+  <!--Save new grand child modal template-->
+<ng-template #saveNewGrandChild>
+    <form [formGroup]="saveNewGrandChildForm">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Grand Child</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="saveNewGrandChildModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                  <input type="checkbox" formControlName="addEditor"> 
+                  <span class="pl-2 _fs-12">Add Editor</span>
+                </label>
+              </div>
+          <label for="exampleInputGrandChild" class="m-0 p-0 _fs-12">Enter Grand Child Name</label>
+          <small class="form-text text-muted pl-1 mb-1 mt-0">Min size 5 , Max size 15</small>
+          <input formControlName="name" autocomplete="off" type="text" max="15" class="form-control" id="exampleInputGrandChild" placeholder="Enter name">
+          <input hidden formControlName="collection">
+          <input hidden formControlName="child">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="text-right">
+          <button class="btn btn-primary" (click)="saveNewGrandChildInLocalStorage()" [disabled]=!saveNewGrandChildForm.valid>Add</button>
+        </div>
+      </div>
+    </form>
+    </ng-template>
+  <!--Save new grand child modal template end-->
+
+
+<!--No Collection found Template-->
+<ng-template #noCollectionFound>
+  <div class="text-muted pl-2 _fs-8 mt-5">
+    No collection added yet, <br>
+    Once added will start appering here..!
+  </div>
+</ng-template>
+<!--No Collection found Template-->

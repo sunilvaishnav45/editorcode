@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+._cp{
+    cursor: pointer;
+}
+.ng-star-inserted{
+    width: 100%;
+}
+.dropdown-item.active, .dropdown-item:active {
+    color: #004085;
+    text-decoration: none;
+    background-color: rgba(137, 63, 148, 0.28);
+    cursor: pointer;
+}
+._wdc-100{
+    width: calc(100vw);
+}
+._bg-pink{
+    background: #ff4363
+}
+._text-pink{
+    color: #ff4363;
+}
+._fs-200{
+    font-size: 200px;
+}

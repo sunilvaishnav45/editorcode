@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <button class="btn btn-primary _bg-pink border-0" (click)="addNewEditor()">
+             <i class="fa fa-plus pr-1 _cp" tooltip="Add new editor" position="left"></i> Add New
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div *ngFor="let len of totalEditorSize" class="col-4">
+        <div class="sample  mt-3">
+            <h5>Editor</h5>
+            <div [froalaEditor]="options"></div>
+        </div>
+    </div>
+</div>
+

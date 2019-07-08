@@ -1,0 +1,110 @@
+<div class="_headerwraper">
+ <div class="row h-100 align-items-center">
+    <!--Menu dropdown start-->
+    <div class="col-3 col-sm-2 col-md-1 order-1">
+        <i class="fa fa-bars _cp" tooltip="Under implementation" position="top"></i>
+    </div>
+    <!--Menu dropdown end-->
+
+    <!--Search start-->
+    <div class="col-12 col-sm-12 col-md-6 order-md-2 order-3">
+      <div class="form-group position-relative mb-0">
+        
+        <i class="fa fa-search position-absolute _search-icon-position"></i>
+          <input type="text" class="form-control border-0 pl-4" 
+              [(ngModel)]="selectedValue"
+              [typeahead]="headerSuggestion"
+              typeaheadOptionField="name"
+              [typeaheadScrollable]="true"
+              (typeaheadNoResults)="typeaheadNoResults($event)"
+              (typeaheadOnSelect)="onTypeAheadSelect($event)"
+              id="searchQuery" aria-describedby="searchQuery" placeholder="Search your query here ex : alab">
+        <div class="alert-danger position-absolute p-2 rounded w-100 noresult" *ngIf="noResult">No Results Found</div>
+      </div>
+    </div>
+    <!--Search end-->
+
+    <!--Invite and notification start-->
+    <div class="col-9 col-sm-10 col-md-5 order-md-3 order-2 text-right">
+        <!--Invite icon-->
+        <div class="d-inline-block mr-3">
+            <i class="fa fa-user-plus"></i>
+            <span class="text-uppercase"> Invite team member</span>
+        </div>
+        <!--Invite icon end -->
+
+        <!--Notification icon-->
+        <div class="d-inline-block mr-3">
+          <i class="fa  fa-bell"></i>
+        </div>
+        <!--Notification icon-->  
+
+        <!--User dropdown start-->
+        <div class="d-inline-block _ht-35 _wd-35 rounded-circle text-center _userdropdown mr-2 position-relative">
+          <span dropdown (onShown)="onShown()" (onHidden)="onHidden()" (isOpenChange)="isOpenChange()" placement="bottom left">
+              <a href id="basic-link" class="_menua" dropdownToggle (click)="false"
+                 aria-controls="basic-link-dropdown"> <span>FL</span></a>
+              <ul id="basic-link-dropdown" *dropdownMenu class="dropdown-menu"
+                  role="menu" aria-labelledby="basic-link">
+                <li>
+                  <a class="dropdown-item pl-2" href="#">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            Dark mode
+                        </div>
+                        <div class="col-4 text-right">
+                          <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                          </label>
+                        </div>
+                    </div>  
+                  </a>
+                </li>
+                <li>
+                    <a class="dropdown-item pl-2" href="#">
+                      Profile
+                    </a>
+                </li>
+                <li class="divider dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item pl-2" href="#">
+                      <div class="row align-items-center">
+                          <div class="col-8">
+                            What's new
+                          </div>
+                          <div class="col-4 text-right">
+                           <div class="_greendotnew"></div>
+                          </div>
+                      </div> 
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item pl-2" href="#">Help</a>
+                </li>
+                <li>
+                  <a class="dropdown-item pl-2" href="#">Send feedback</a>
+                </li>
+                <li>
+                    <a class="dropdown-item pl-2" href="#">Hints and dhortcuts</a>
+                </li>
+                <li class="divider dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item pl-2" href="#">Logout</a>
+                </li>
+              </ul>
+            </span>
+          <div class="_new text-white text-uppercase">
+            New
+          </div>
+          <div class="_greendot"></div>
+        </div>
+        <!--User dropdown end-->
+
+    </div>
+    <!--Invite and notification end-->
+  </div>
+</div>
+
+
+
